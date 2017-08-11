@@ -24,106 +24,108 @@ enum Color {
 
 }
 
-public class BerlinClock {
+class BerlinClock {
 
-    private static final String NEWLINE = "\n";
-    private int hours;
-    private int minutes;
-    private int seconds;
+    public static final char NEWLINE = '\n';
 
-    public String getTime() {
-        StringBuilder s = new StringBuilder();
-        s.append(getSeconds());
-        s.append(getHours());
-        s.append(getMinutes());
-        return s.toString();
+    private String seconds;
+    private String minutes;
+    private String hours;
+
+    void setTime(String t) {
+        String[] parts = t.split(":");
+
+        setHours(parts[0]);
+        setMinutes(parts[1]);
+        setSeconds(parts[2]);
     }
 
-    public void setTime(String t) {
-        String[] pieces = t.split(":");
-        setHours(pieces[0]);
-        setMinutes(pieces[1]);
-        setSeconds(pieces[2]);
+    String getTime() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append(getSeconds());
+        stringBuilder.append(getHours());
+        stringBuilder.append(getMinutes());
+
+        return stringBuilder.toString();
+    }
+
+    public void setSeconds(String s) {
+        if (Integer.parseInt(s) < 0 || Integer.parseInt(s) > 59)
+            throw new IllegalArgumentException(
+                    "Value of the seconds must be number between 0 and 59"
+            );
+        int sec = Integer.parseInt(s);
+        if (sec % 2 == 0) {
+            seconds = YELLOW.getValue() + NEWLINE;
+
+        } else {
+            seconds = OFF.getValue() + NEWLINE;
+        }
+    }
+
+    public void setMinutes(String m) {
+        if (Integer.parseInt(m) < 0 || Integer.parseInt(m) > 59)
+            throw new IllegalArgumentException(
+                    "Value of the minutes must be number between 0 and 59"
+            );
+        int integer = Integer.parseInt(m) / 5;
+        int fraction = Integer.parseInt(m) % 5;
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(rowOfEleven(integer));
+        stringBuilder.append(NEWLINE);
+        stringBuilder.append(rowOfFour(fraction).replace(RED.getValue(), YELLOW.getValue()));
+        stringBuilder.append(NEWLINE);
+
+        minutes = stringBuilder.toString();
+    }
+
+    public void setHours(String h) {
+        if (Integer.parseInt(h) < 0 || Integer.parseInt(h) > 24)
+            throw new IllegalArgumentException(
+                    "Value of the hours must be number between 0 and 59"
+            );
+        int integer = Integer.parseInt(h) / 5;
+        int fraction = Integer.parseInt(h) % 5;
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(rowOfFour(integer));
+        stringBuilder.append(NEWLINE);
+        stringBuilder.append(rowOfFour(fraction));
+        stringBuilder.append(NEWLINE);
+
+        hours = stringBuilder.toString();
     }
 
     public String getSeconds() {
-        if (seconds % 2 == 0) {
-            return YELLOW.getValue() + NEWLINE;
-        } else {
-            return OFF.getValue() + NEWLINE;
-        }
-    }
-
-    public String getHours() {
-        int quotient = hours / 5;
-        int remainder = hours % 5;
-        StringBuilder s = new StringBuilder();
-        s.append(rowOfFour(quotient));
-        s.append(NEWLINE);
-        s.append(rowOfFour(remainder));
-        s.append(NEWLINE);
-        return s.toString();
+        return seconds;
     }
 
     public String getMinutes() {
-        int quotient = minutes / 5;
-        int remainder = minutes % 5;
-        StringBuilder s = new StringBuilder();
-        s.append(rowOfEleven(quotient));
-        s.append(NEWLINE);
-        s.append(rowOfFour(remainder).replace(RED.getValue(), YELLOW.getValue()));
-        s.append(NEWLINE);
-        return s.toString();
+        return minutes;
     }
 
-    private void setSeconds(String s) {
-        int i = Integer.parseInt(s);
-        if (i >= 0 && i <= 59) {
-            seconds = i;
-        } else {
-            throw new IllegalArgumentException(
-                    "seconds must be between 0 and 59"
-            );
-        }
+    public String getHours() {
+        return hours;
     }
 
-    private void setMinutes(String s) {
-        int i = Integer.parseInt(s);
-        if (i >= 0 && i <= 59) {
-            minutes = i;
-        } else {
-            throw new IllegalArgumentException(
-                    "minutes must be between 0 and 59"
-            );
-        }
-    }
-
-    private void setHours(String s) {
-        int i = Integer.parseInt(s);
-        if (i >= 0 && i <= 24) {
-            hours = i;
-        } else {
-            throw new IllegalArgumentException(
-                    "hours must be between 0 and 24"
-            );
-        }
-    }
 
     private String rowOfFour(int value) {
+
         String[] off = new String[4];
+
         Arrays.fill(off, OFF.getValue());
         for (int i = 0; i < value; i++) {
             off[i] = RED.getValue();
         }
-
-
         return String.join("", off);
     }
 
     private String rowOfEleven(int value) {
+
         String[] off = new String[11];
         Arrays.fill(off, OFF.getValue());
-
         for (int i = 0; i < value; i++) {
             if ((i + 1) % 3 == 0) {
                 off[i] = RED.getValue();

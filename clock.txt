@@ -1,0 +1,96 @@
+
+
+                         Y or O         - seconds
+                       R R R R         or O - hours       Each for 5 hours
+                       R R R R           - hours          Each fot 1 hours
+                  Y Y R Y Y R Y Y R Y Y     or O - minutes Each 5 minutes
+                       Y Y Y Y            - minutes        Each 1 minute
+
+                         24:00:00 - Y RRRR RRRR OOOOOOOO OOOO
+                         "23:59:59"; - O RRRR RRRO YYYYYYYYY YYYY
+                         "13:17:01";  - O  RROO RRRO YYYOOOOO YYOO
+                         00:00:00"; - O OOO
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

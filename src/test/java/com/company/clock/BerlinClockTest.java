@@ -87,6 +87,23 @@ public class BerlinClockTest {
         berlinClock.setTime("25:22:33");
     }
 
+    @Test(expected=IllegalArgumentException.class)
+    public void testWordsHours() {
+        berlinClock.setTime("aa:22:33");
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testWordsMinutes() {
+        berlinClock.setTime("25:aa:33");
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testWordsSeconds() {
+        berlinClock.setTime("25:25:aa");
+    }
+
+
+
     @Test
     public void testSecondsEven() {
         String s = "11:22:00";
